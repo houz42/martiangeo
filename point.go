@@ -31,12 +31,12 @@ func (p Point) offset() Point {
 // https://en.wikipedia.org/wiki/World_Geodetic_System
 type WGS Point
 
-func (s *WGS) ToGCJ() GCJ {
-	if (*Point)(s).outOfChina() {
+func (s WGS) ToGCJ() GCJ {
+	if (Point)(s).outOfChina() {
 		return GCJ{s.Longitute, s.Latitude}
 	}
 
-	os := (*Point)(s).offset()
+	os := (Point)(s).offset()
 	radlat := deg2rad(s.Latitude)
 	magic := math.Sin(radlat)
 	magic = 1 - ee*magic*magic
